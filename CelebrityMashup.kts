@@ -19,7 +19,6 @@ fun calculateMashups(names: List<String>, minimumOverlap: Int): List<Mashup> =
     cartesianProduct(names, names)
         .filterNot { it.first == it.second }
         .mapNotNull { findBestMashup(it, minimumOverlap) }
-        .sortedBy { it.mashupName }
 
 fun <T> cartesianProduct(list1: Iterable<T>, list2: Iterable<T>): Iterable<Pair<T, T>> =
     list1.flatMap { first -> list2.map { second -> first to second } }
@@ -59,4 +58,4 @@ fun printMashups(mashups: List<Mashup>) {
 val names = readNamesFromTxtFiles(path = ".")
 val mashups = calculateMashups(names, minimumOverlap = 3) // Really short overlaps don't make for good mashups
 
-printMashups(mashups)
+printMashups(mashups.sortedBy { it.mashupName })
