@@ -1,4 +1,4 @@
-# Celebrity Mashup
+# Celebrity Mashups
 
 Find funny celebrity mashup names, like Boy George Michael or Bill Clintonke Dragt.
 
