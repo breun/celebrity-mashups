@@ -5,7 +5,7 @@ import java.io.File
 data class Mashup(
     val mashupName: String,
     val overlap: Int,
-    val pair: Pair<String, String>
+    val originalNames: Pair<String, String>
 )
 
 // Functions
@@ -24,9 +24,9 @@ fun calculateMashups(names: List<String>, minimumOverlap: Int): List<Mashup> =
 fun <T> cartesianProduct(list1: Iterable<T>, list2: Iterable<T>): Iterable<Pair<T, T>> =
     list1.flatMap { first -> list2.map { second -> first to second } }
 
-fun findBestMashup(pair: Pair<String, String>, minimumOverlap: Int): Mashup? {
-    val first = pair.first.toLowerCase()
-    val second = pair.second.toLowerCase()
+fun findBestMashup(originalNames: Pair<String, String>, minimumOverlap: Int): Mashup? {
+    val first = originalNames.first.toLowerCase()
+    val second = originalNames.second.toLowerCase()
 
     // Maximum overlap cannot be more than the minimum length of the strings.
     // Subtract one from that minimum to avoid mashups where one name completely contains the other, because those aren't funny.
@@ -37,8 +37,8 @@ fun findBestMashup(pair: Pair<String, String>, minimumOverlap: Int): Mashup? {
         val overlapString = second.take(overlap)
         if (first.endsWith(overlapString)) {
             return Mashup(
-                mashupName = pair.first + pair.second.drop(overlap),
-                pair = pair,
+                mashupName = originalNames.first + originalNames.second.drop(overlap),
+                originalNames = originalNames,
                 overlap = overlap
             )
         }
@@ -49,7 +49,7 @@ fun findBestMashup(pair: Pair<String, String>, minimumOverlap: Int): Mashup? {
 }
 
 fun printMashups(mashups: List<Mashup>) {
-    mashups.forEach { println("${it.mashupName} ${it.pair} [${it.overlap}]") }
+    mashups.forEach { println("${it.mashupName} ${it.originalNames} [${it.overlap}]") }
     println("")
     println("Found ${mashups.size} celebrity mashups")
 }
